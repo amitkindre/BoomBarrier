@@ -1,0 +1,15 @@
+<RCC>
+    <qresource prefix="/">
+        <file>main.qml</file>
+        <file>qtquickcontrols2.conf</file>
+        <file>Light.qml</file>
+        <file>SideBar.qml</file>
+        <file>MyMenuBar.qml</file>
+        <file>back.png</file>
+        <file>menu.png</file>
+        <file>LoginPage.qml</file>
+        <file>ControlPage.qml</file>
+        <file>ButtonColor.qml</file>
+        <file>loginScript.js</file>
+    </qresource>
+</RCC>
