@@ -69,7 +69,7 @@ void TcpClient::closegate()
 
 void TcpClient::brightness(int val)
 {
-    char strbuff[100];
+    char strbuff[110];
     //if(socket->state() != socket->ConnectedState)
     socket->connectToHost(TDCIP, port);
     sprintf(strbuff,"%d\r\n\r\n",val);
