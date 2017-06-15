@@ -126,21 +126,21 @@ Rectangle{
 
     }
 
-//    Dial {
-//        id: dial
-//        height: 200
-//        stepSize: 5
-//        to: 1024
-//        anchors.rightMargin: 50
-//        anchors.leftMargin: 50
-//        anchors.bottomMargin: 150
-//        anchors.topMargin: 100
-//        anchors.fill: parent
+    Dial {
+        id: dial
+        height: 200
+        stepSize: 5
+        to: 1024
+        anchors.rightMargin: 50
+        anchors.leftMargin: 50
+        anchors.bottomMargin: 150
+        anchors.topMargin: 100
+        anchors.fill: parent
 
-//        onValueChanged: {
-//            tclient.brightness(dial.value);
-//        }
-//    }
+        onValueChanged: {
+            tclient.brightness(dial.value);
+        }
+    }
 
 
     states: [
