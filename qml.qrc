@@ -11,5 +11,6 @@
         <file>ControlPage.qml</file>
         <file>ButtonColor.qml</file>
         <file>loginScript.js</file>
+        <file>DeviceList.qml</file>
     </qresource>
 </RCC>

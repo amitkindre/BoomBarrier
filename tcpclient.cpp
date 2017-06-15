@@ -1,9 +1,9 @@
 #include "tcpclient.h"
 #include <QDebug>
 
-//#define TDCIP "100.101.111.238"
-#define TDCIP "192.168.4.1"
-#define port 8080
+#define TDCIP "100.101.111.238"
+//#define TDCIP "192.168.4.1"
+#define port 80
 
 TcpClient::TcpClient(QObject *parent) : QObject(parent)
 {
