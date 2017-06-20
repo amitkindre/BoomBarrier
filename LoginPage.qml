@@ -1,12 +1,15 @@
 import QtQuick 2.6
 //import QtQuick.Controls 2.1
 import QtQuick.Controls 1.4
+import QtQml 2.2
+
 import "loginScript.js"  as LoginEngine
 
 
 Rectangle{
     id: rectangle1
     property alias operation: textField.text
+    property alias textField: textField
     Column {
         id: column1
         x: 41
@@ -82,6 +85,9 @@ Rectangle{
                     loginPage.visible = false
                     //LoginEngine.loginCheck()
                     tclient.connect();
+
+                     //textField.getText();
+                    tclient.logintoserver(textField.text,textField1.text);
                 }
 
             }

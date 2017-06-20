@@ -3,6 +3,7 @@
 
 #include <QObject>
 #include <QTcpSocket>
+#include <QString>
 
 #include <QObject>
 
@@ -16,6 +17,7 @@ public:
     Q_INVOKABLE void closegate();
     Q_INVOKABLE void opengate();
     Q_INVOKABLE void brightness(int);
+    Q_INVOKABLE void logintoserver(QString,QString);
 
 signals:
 
