@@ -29,7 +29,7 @@ int main(int argc, char *argv[])
 
 //    Wifi z;
 
-////  qDebug() << "Config";
+//  qDebug() << "Config";
 //    QNetworkConfigurationManager ncm;
 //    QNetworkConfiguration cfg;
 //    QNetworkInterface nif;
@@ -49,10 +49,10 @@ int main(int argc, char *argv[])
 //    QList<QHostAddress> list = QNetworkInterface::allAddresses();
 //    QString lst = nif.humanReadableName();
 
-////    for(int nIter=0; nIter<lst.count(); nIter++)
-////    {
-////        qDebug() << lst[nIter].toString();
-////    }
+//    for(int nIter=0; nIter<lst.count(); nIter++)
+//    {
+//        qDebug() << lst[nIter].toString();
+//    }
 
 //        qDebug() << lst;
 

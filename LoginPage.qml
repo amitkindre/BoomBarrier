@@ -3,8 +3,8 @@ import QtQuick 2.6
 import QtQuick.Controls 1.4
 import QtQml 2.2
 
-import "loginScript.js"  as LoginEngine
 
+import "loginScript.js"  as LoginEngine
 
 Rectangle{
     id: rectangle1
@@ -39,6 +39,8 @@ Rectangle{
                 anchors.rightMargin: 5
                 anchors.left: parent.left
                 anchors.leftMargin: 5
+
+
                 placeholderText: qsTr("User Name")
             }
 
@@ -53,6 +55,7 @@ Rectangle{
                 anchors.right: parent.right
                 anchors.rightMargin: 5
                 placeholderText: qsTr("Password")
+
             }
 
             TextField {
@@ -64,6 +67,17 @@ Rectangle{
                 anchors.left: parent.left
                 anchors.leftMargin: 5
                 placeholderText: qsTr("SSID")
+            }
+
+            Button {
+                id: button
+                text: qsTr("Button")
+                anchors.horizontalCenter: parent.horizontalCenter
+                onClicked: {
+                     loginPage.visible = false
+                     controlPage.visible = true
+
+                }
             }
         }
 
@@ -80,13 +94,16 @@ Rectangle{
             MouseArea {
                 id: loginButtonArea
                 anchors.fill: parent
+
+
                 onClicked:{
+                    focus = true
                     controlPage.visible = true
                     loginPage.visible = false
                     //LoginEngine.loginCheck()
                     tclient.connect();
 
-                     //textField.getText();
+                    //textField.getText();
                     tclient.logintoserver(textField.text,textField1.text);
                 }
 

@@ -1,9 +1,10 @@
 #include "tcpclient.h"
 #include <QDebug>
 
-//#define TDCIP "100.101.111.238"
-#define TDCIP "192.168.4.1"
-#define port 8080
+
+#define TDCIP "100.101.111.238"
+//#define TDCIP "192.168.4.1"
+#define port 80
 
 TcpClient::TcpClient(QObject *parent) : QObject(parent)
 {
@@ -14,6 +15,7 @@ void TcpClient::connect()
 {
     socket = new QTcpSocket(this);
     socket->connectToHost(TDCIP, port);
+
     //100.101.111.238
 
     if(socket->waitForConnected(3000))

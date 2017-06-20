@@ -18,7 +18,7 @@ Rectangle{
             id: indicatorRow
             height: 70
             anchors.top: parent.top
-            anchors.topMargin: 0
+            anchors.topMargin: 100
             anchors.right: parent.right
             anchors.rightMargin: 0
             anchors.left: parent.left
@@ -56,7 +56,7 @@ Rectangle{
             anchors.left: parent.left
             anchors.leftMargin: 0
             anchors.bottom: parent.bottom
-            anchors.bottomMargin: 0
+            anchors.bottomMargin: 50
             spacing: 10
 
             Rectangle {
@@ -126,19 +126,26 @@ Rectangle{
 
     }
 
-    Dial {
-        id: dial
-        height: 200
-        stepSize: 5
-        to: 1024
-        anchors.rightMargin: 50
-        anchors.leftMargin: 50
-        anchors.bottomMargin: 150
-        anchors.topMargin: 100
-        anchors.fill: parent
+    Rectangle {
+        id: rectangle4
+        x: 8
+        width: 234
+        height: 50
+        color: "#ffffff"
+        anchors.top: parent.top
+        anchors.topMargin: 20
 
-        onValueChanged: {
-            tclient.brightness(dial.value);
+        Label {
+            id: label
+            text: qsTr("Connecting")
+            anchors.rightMargin: 5
+            anchors.leftMargin: 5
+            anchors.bottomMargin: 5
+            anchors.topMargin: 5
+            font.pointSize: 15
+            verticalAlignment: Text.AlignVCenter
+            horizontalAlignment: Text.AlignHCenter
+            anchors.fill: parent
         }
     }
 
