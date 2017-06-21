@@ -1,11 +1,11 @@
 import QtQuick 2.0
 import QtQuick.Controls 2.1
 
-Rectangle{
+Item{
     id: rectangle5
     width: 250
     height: 400
-    radius: 0
+    //radius: 0
 
     Column {
         id: column

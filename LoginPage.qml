@@ -1,124 +1,69 @@
-import QtQuick 2.6
-//import QtQuick.Controls 2.1
-import QtQuick.Controls 1.4
-import QtQml 2.2
+import QtQuick 2.0
+import QtQuick.Layouts 1.3
+import QtQuick.Controls 2.1
 
-
-import "loginScript.js"  as LoginEngine
-
-Rectangle{
-    id: rectangle1
-    property alias operation: textField.text
-    property alias textField: textField
-    Column {
-        id: column1
-        x: 41
-        y: 57
-        width: 210
-        height: 350
-        spacing: 50
-        anchors.verticalCenterOffset: 0
-        anchors.horizontalCenterOffset: 0
-        anchors.horizontalCenter: parent.horizontalCenter
+Item {
+    id: loginpage
+    ColumnLayout {
+        id: columnLayout
+        width: 640
+        height: 250
         anchors.verticalCenter: parent.verticalCenter
+        anchors.horizontalCenter: parent.horizontalCenter
+        spacing: 10
 
-        Column {
-            id: column
-            width: 200
-            height: 350
-            anchors.horizontalCenter: parent.horizontalCenter
-            anchors.top: parent.top
-            anchors.topMargin: 0
-            spacing: 20
+        TextField {
+            id: textField1
+            Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
+            placeholderText:  qsTr("User Name")
+        }
 
-            TextField {
-                id: textField
-                height: 50
-                font.pixelSize: 15
-                anchors.right: parent.right
-                anchors.rightMargin: 5
-                anchors.left: parent.left
-                anchors.leftMargin: 5
+        TextField {
+            id: textField2
+            Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
+            placeholderText:  qsTr("Password")
+        }
 
-
-                placeholderText: qsTr("User Name")
-            }
-
-            TextField {
-                id: textField1
-                height: 50
-                font.pixelSize: 15
-                inputMask: ""
-                echoMode: 2
-                anchors.left: parent.left
-                anchors.leftMargin: 5
-                anchors.right: parent.right
-                anchors.rightMargin: 5
-                placeholderText: qsTr("Password")
-
-            }
-
-            TextField {
-                id: textField2
-                height: 50
-                font.pixelSize: 15
-                anchors.right: parent.right
-                anchors.rightMargin: 5
-                anchors.left: parent.left
-                anchors.leftMargin: 5
-                placeholderText: qsTr("SSID")
-            }
-
-            Button {
-                id: button
-                text: qsTr("Button")
-                anchors.horizontalCenter: parent.horizontalCenter
-                onClicked: {
-                     loginPage.visible = false
-                     controlPage.visible = true
-
-                }
-            }
+        TextField {
+            id: textField3
+            Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
+            placeholderText:  qsTr("SSID")
         }
 
         Rectangle {
-            id: loginButton
-            y: 250
+            id: loginRect
             width: 200
-            height: 50
-            color: "#2869ce"
-            radius: 5
-            opacity: 1
-            anchors.horizontalCenter: parent.horizontalCenter
+            height: 60
+            color: "#2c63a6"
+            Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
 
             MouseArea {
-                id: loginButtonArea
+                id: loginButton
+                height: 60
                 anchors.fill: parent
-
-
-                onClicked:{
+                onClicked: {
                     focus = true
-                    controlPage.visible = true
                     loginPage.visible = false
-                    //LoginEngine.loginCheck()
+                    controlPage.visible = true
                     tclient.connect();
 
                     //textField.getText();
                     tclient.logintoserver(textField.text,textField1.text);
                 }
-
             }
 
             Label {
                 id: label
+                height: 60
                 text: qsTr("Login")
-                anchors.fill: parent
+                font.letterSpacing: 0
+                padding: 2
+                font.bold: true
+                font.pointSize: 20
                 verticalAlignment: Text.AlignVCenter
                 horizontalAlignment: Text.AlignHCenter
+                anchors.fill: parent
             }
         }
     }
-
-
-
 }

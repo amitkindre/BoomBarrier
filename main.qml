@@ -7,6 +7,7 @@ import QtQuick.Controls 1.4
 
 
 ApplicationWindow {
+    id: applicationWindow
     visible: true
     width: 640
     height: 480
@@ -15,11 +16,14 @@ ApplicationWindow {
     function loginCheck() {loginEngine.loginCheck()}
     MyMenuBar{
         id: mainMenu
+        anchors.right: parent.right
         anchors.rightMargin: 0
-        anchors.bottomMargin: 0
+        anchors.left: parent.left
         anchors.leftMargin: 0
+        anchors.top: parent.top
         anchors.topMargin: 0
-        anchors.fill: parent
+
+
     }
 
 
@@ -30,7 +34,7 @@ ApplicationWindow {
         //x: 112
         // y: 97
         anchors.horizontalCenter: parent.horizontalCenter
-        anchors.verticalCenter: parent.verticalCenter
+
         visible: false
     }
 
@@ -45,13 +49,25 @@ ApplicationWindow {
 
     LoginPage {
         id: loginPage
-        x: 320
         y: 240
-        //x: 320
-        // y: 240
-        anchors.verticalCenter: parent.verticalCenter
-        anchors.horizontalCenter: parent.horizontalCenter
+        height: 0
+        anchors.right: parent.right
+        anchors.rightMargin: 20
+        anchors.left: parent.left
+        anchors.leftMargin: 20
+
         visible: true
+
+    }
+    SideBar {
+        id: sideBar
+        z:1
+        anchors.bottom: parent.bottom
+        anchors.bottomMargin: 0
+        anchors.topMargin: 0
+        visible: false
+        anchors.right: parent.right
+        anchors.top: mainMenu.bottom
     }
 }
 

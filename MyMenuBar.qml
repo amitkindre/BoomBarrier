@@ -57,6 +57,9 @@ Rectangle{
             anchors.rightMargin: 30
             anchors.verticalCenter: parent.verticalCenter
             //text: qsTr("Button")
+            onClicked: {
+                sideBar.visible = !sideBar.visible
+            }
 
 
             Image {

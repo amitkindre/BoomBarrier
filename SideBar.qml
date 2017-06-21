@@ -1,147 +1,69 @@
 import QtQuick 2.0
+import QtQuick.Controls 2.1
+import QtQuick.Layouts 1.3
 
 Rectangle {
-    id: rectangle1
-    width: 200
-    Rectangle {
-        id: tag_sideBar
-        width: 200
-        color: "#2190b5"
+    id: rect1
+    width: 250
+    height: 480
+    color: "#f02869ce"
+    radius: 3
+    z: 1
+    border.width: 3
+    border.color: "#0d2ea0"
 
-        anchors.right: parent.right
-        anchors.rightMargin: 0
-        anchors.bottom: parent.bottom
-        anchors.bottomMargin: 0
-        anchors.top: parent.top
-        anchors.topMargin: 75
+    ListView {
+          id: listView
+          anchors.fill: parent
+          model: ListModel {
+              ListElement { sender: "Bob Bobbleton"; title: "How are you going?" }
+              ListElement { sender: "Rug Emporium"; title: "SALE! All rugs MUST go!" }
+              ListElement { sender: "Electric Co."; title: "Electricity bill 15/07/2016 overdue" }
+              ListElement { sender: "Tips"; title: "Five ways this tip will save your life" }
+          }
+          delegate: SwipeDelegate {
+              id: swipeDelegate
+              text: model.sender + " - " + model.title
+              width: parent.width
 
-        Column {
-            id: column
-            spacing: 15
-            anchors.fill: parent
+              ListView.onRemove: SequentialAnimation {
+                  PropertyAction {
+                      target: swipeDelegate
+                      property: "ListView.delayRemove"
+                      value: true
+                  }
+                  NumberAnimation {
+                      target: swipeDelegate
+                      property: "height"
+                      to: 0
+                      easing.type: Easing.InOutQuad
+                  }
+                  PropertyAction {
+                      target: swipeDelegate;
+                      property: "ListView.delayRemove";
+                      value: false
+                  }
+              }
 
-            Rectangle {
-                id: rectangle5
-                height: 4
-                anchors.left: parent.left
-                gradient: Gradient {
-                    GradientStop {
-                        position: 0
-                        color: "#ffffff"
-                    }
+              swipe.right: Label {
+                  id: deleteLabel
+                  text: qsTr("Delete")
+                  color: "white"
+                  verticalAlignment: Label.AlignVCenter
+                  padding: 12
+                  height: parent.height
+                  anchors.right: parent.right
 
-                    GradientStop {
-                        position: 1
-                        color: "#0e82a3"
-                    }
-                }
-                anchors.rightMargin: 0
-                anchors.right: parent.right
-                anchors.leftMargin: 0
-            }
+                  SwipeDelegate.onClicked: listView.model.remove(index)
 
-            Text {
-                id: text1
-                height: 30
-                text: qsTr("Text")
-                verticalAlignment: Text.AlignVCenter
-                horizontalAlignment: Text.AlignHCenter
-                anchors.right: parent.right
-                anchors.rightMargin: 5
-                anchors.left: parent.left
-                anchors.leftMargin: 5
-                font.pixelSize: 12
-            }
-
-            Rectangle {
-                id: rectangle2
-                height: 4
-                gradient: Gradient {
-                    GradientStop {
-                        position: 0
-                        color: "#ffffff"
-                    }
-
-                    GradientStop {
-                        position: 1
-                        color: "#0e82a3"
-                    }
-                }
-                anchors.right: parent.right
-                anchors.rightMargin: 0
-                anchors.left: parent.left
-                anchors.leftMargin: 0
-            }
-
-            Text {
-                id: text2
-                height: 30
-                text: qsTr("Text")
-                verticalAlignment: Text.AlignVCenter
-                horizontalAlignment: Text.AlignHCenter
-                anchors.left: parent.left
-                anchors.rightMargin: 5
-                anchors.right: parent.right
-                anchors.leftMargin: 5
-                font.pixelSize: 12
-            }
-
-            Rectangle {
-                id: rectangle3
-                height: 4
-                anchors.left: parent.left
-                gradient: Gradient {
-                    GradientStop {
-                        position: 0
-                        color: "#ffffff"
-                    }
-
-                    GradientStop {
-                        position: 1
-                        color: "#0e82a3"
-                    }
-                }
-                anchors.rightMargin: 0
-                anchors.right: parent.right
-                anchors.leftMargin: 0
-            }
-
-            Text {
-                id: text3
-                height: 30
-                text: qsTr("Text")
-                horizontalAlignment: Text.AlignHCenter
-                verticalAlignment: Text.AlignVCenter
-                anchors.left: parent.left
-                anchors.rightMargin: 5
-                anchors.right: parent.right
-                anchors.leftMargin: 5
-                font.pixelSize: 12
-            }
-
-            Rectangle {
-                id: rectangle4
-                height: 4
-                anchors.left: parent.left
-                gradient: Gradient {
-                    GradientStop {
-                        position: 0
-                        color: "#ffffff"
-                    }
-
-                    GradientStop {
-                        position: 1
-                        color: "#0e82a3"
-                    }
-                }
-                anchors.rightMargin: 0
-                anchors.right: parent.right
-                anchors.leftMargin: 0
-            }
+                  background: Rectangle {
+                      color: deleteLabel.SwipeDelegate.pressed ? Qt.darker("tomato", 1.1) : "tomato"
+                  }
+              }
+          }
+      }
 
 
 
-        }
-    }
 
 }
