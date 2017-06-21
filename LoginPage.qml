@@ -34,7 +34,7 @@ Item {
             id: loginRect
             width: 200
             height: 60
-            color: "#2c63a6"
+            color: "#2869ce"
             Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
 
             MouseArea {
