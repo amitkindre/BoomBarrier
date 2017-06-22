@@ -14,8 +14,9 @@ TcpClient::TcpClient(QObject *parent) : QObject(parent)
 
 void TcpClient::connect()
 {
-
+    
     socket = new QTcpSocket(this);
+    
     socket->connectToHost(TDCIP, port);
 
     //100.101.111.238

@@ -10,8 +10,8 @@ Item{
     Column {
         id: column
         height: 250
-        anchors.bottomMargin: 0
-        anchors.fill: parent
+//        anchors.bottomMargin: 0
+         anchors.fill: parent
         spacing: 50
 
         Row {
@@ -126,47 +126,34 @@ Item{
 
     }
 
-    Rectangle {
-        id: rectangle4
-        x: 8
-        width: 234
-        height: 50
-        color: "#ffffff"
-        anchors.top: parent.top
-        anchors.topMargin: 20
 
-        Label {
-            id: label
-            text: qsTr("Connecting")
-            anchors.rightMargin: 5
-            anchors.leftMargin: 5
-            anchors.bottomMargin: 5
-            anchors.topMargin: 5
-            font.pointSize: 15
-            verticalAlignment: Text.AlignVCenter
-            horizontalAlignment: Text.AlignHCenter
-            anchors.fill: parent
-        }
-    }
 
 
     states: [
         State {
             name: "Open"
 
-            PropertyChanges {
-                target: rectangle2
-                color: "#50a40d0d"
-            }
+            PropertyChanges { target: rectangle2; color: "#50a40d0d" }
+            PropertyChanges { target: mouseArea1; visible: false}
+            PropertyChanges { target: mouseArea; visible: true}
         },
         State {
             name: "Close"
 
-            PropertyChanges {
-                target: rectangle3
-                color: "#501fb71f"
-            }
+            PropertyChanges { target: rectangle3;  color: "#501fb71f"}
+            PropertyChanges { target: mouseArea1; visible: true}
+            PropertyChanges { target: mouseArea; visible: false}
         }
+    ]
+    transitions:[
+    Transition {
+        from: "*"
+        to: "*"
+        PropertyAnimation { target: rectangle2; properties: "color"; duration: 1000}
+        PropertyAnimation { target: rectangle3; properties: "color"; duration: 1000}
+
+    }
+
     ]
 
 }

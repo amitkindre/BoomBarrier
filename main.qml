@@ -4,6 +4,8 @@ import QtQuick.Controls 1.4
 //import QtQuick.Controls 2.0
 //import "comp"
 //import "loginScript.js"  as LoginEngine
+import QtQuick.Layouts 1.3
+import QtQuick.Window 2.2
 
 
 ApplicationWindow {
@@ -12,6 +14,25 @@ ApplicationWindow {
     width: 640
     height: 480
     title: qsTr("Components")
+
+    Item {
+          Timer {
+              id: connectTimer
+              interval: 3000; running: false; repeat: true
+              onTriggered: {
+
+                   if(tclient.getConnectStatus()){
+                       connetIndicator.state = "connected";
+                       console.log("Connected");
+                   }
+                   else{
+                       connetIndicator.state = "disconnected";
+                       console.log("disConnected");
+                   }
+              }
+          }
+      }
+
 
     function loginCheck() {loginEngine.loginCheck()}
     MyMenuBar{
@@ -26,6 +47,18 @@ ApplicationWindow {
 
     }
 
+
+    ConnetIndicator {
+        id: connetIndicator
+        height: 10
+        width: 640
+        anchors.top: mainMenu.bottom
+        anchors.topMargin: 0
+        anchors.right: parent.right
+        anchors.rightMargin: 0
+        anchors.left: parent.left
+        anchors.leftMargin: 0
+    }
 
     ControlPage {
         id: controlPage
@@ -47,6 +80,7 @@ ApplicationWindow {
     }
 */
 
+
     LoginPage {
         id: loginPage
         y: 240
@@ -59,6 +93,8 @@ ApplicationWindow {
         visible: true
 
     }
+
+
     SideBar {
         id: sideBar
         z:1
@@ -69,6 +105,10 @@ ApplicationWindow {
         anchors.right: parent.right
         anchors.top: mainMenu.bottom
     }
+
+
+
 }
+
 
 

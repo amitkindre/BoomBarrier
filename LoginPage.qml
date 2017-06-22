@@ -48,7 +48,8 @@ Item {
                     tclient.connect();
 
                     //textField.getText();
-                    tclient.logintoserver(textField.text,textField1.text);
+                    tclient.logintoserver(textField1.text,textField2.text);
+                    connectTimer.running = true;
                 }
             }
 

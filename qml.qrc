@@ -12,5 +12,6 @@
         <file>ButtonColor.qml</file>
         <file>loginScript.js</file>
         <file>DeviceList.qml</file>
+        <file>ConnetIndicator.qml</file>
     </qresource>
 </RCC>

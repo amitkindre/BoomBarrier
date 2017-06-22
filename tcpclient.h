@@ -18,6 +18,7 @@ public:
     Q_INVOKABLE void opengate();
     Q_INVOKABLE void brightness(int);
     Q_INVOKABLE void logintoserver(QString,QString);
+    Q_INVOKABLE bool getConnectStatus();
 
 signals:
 
