@@ -1,10 +1,13 @@
 #include "tcpclient.h"
 #include <QDebug>
+#include <string>
 
 
-//#define TDCIP "100.101.111.238"
+#define TDCIP "100.101.111.238" //SANTOSH KIT
 //#define TDCIP "192.168.4.1"
 //#define TDCIP "127.0.0.1"
+//#define TDCIP "100.101.111.182"//mobile ip
+//#define TDCIP "100.101.111.183" //my pc server
 #define port 80
 
 TcpClient::TcpClient(QObject *parent) : QObject(parent)
@@ -12,48 +15,53 @@ TcpClient::TcpClient(QObject *parent) : QObject(parent)
 
 }
 
-void TcpClient::connect()
+bool TcpClient::connect()
 {
 
     socket = new QTcpSocket(this);
-    socket->connectToHost(TDCIP, port);
+
+    if(socket->state() != socket->ConnectedState)
+        socket->connectToHost(TDCIP, port);
 
     //100.101.111.238
 
     if(socket->waitForConnected(3000))
-        {
-            qDebug() << "Connected!";
+    {
+        qDebug() << "Connected!";
 
-            // send
-            //socket->write("divya\r\n\r\n\r\n\r\n");
-            //socket->waitForBytesWritten(1000);
-            socket->waitForReadyRead(3000);
-            qDebug() << "Reading: " << socket->bytesAvailable();
+        // send
+        socket->write("\r\n");
+        socket->waitForBytesWritten(100);
+        socket->waitForReadyRead(3000);
+        qDebug() << "Reading: " << socket->bytesAvailable();
 
-            qDebug() << socket->readAll();
+        qDebug() << socket->readAll();
 
-            //socket->close();
-        }
-        else
-        {
-            qDebug() << "Not connected!";
-        }
+        return true;
 
-    return;
+        //socket->close();
+    }
+    else
+    {
+        qDebug() << "Not connected!";
+        return false;
+    }
+
+
 }
 
 void TcpClient::opengate()
 {
     if(socket->state() != socket->ConnectedState)
     socket->connectToHost(TDCIP, port);
-    socket->write("GET /O1?\r\n\r\n\r\n\r\n");
+    socket->write("GET /O1? HTTP/1.1\r\n");
     socket->waitForBytesWritten(1000);
 
     socket->waitForReadyRead(3000);
     qDebug() << "Reading: " << socket->bytesAvailable();
 
     qDebug() << socket->readAll();
-    socket->close();
+    //socket->close();
 
     qDebug() << "open";
 }
@@ -62,7 +70,7 @@ void TcpClient::closegate()
 {
     if(socket->state() != socket->ConnectedState)
     socket->connectToHost(TDCIP, port);
-    socket->write("GET /C1?\r\n\r\n\r\n\r\n");
+    socket->write("GET /C1? HTTP/1.1\r\n");
 
     socket->waitForBytesWritten(1000);
 
@@ -70,7 +78,7 @@ void TcpClient::closegate()
     qDebug() << "Reading: " << socket->bytesAvailable();
 
     qDebug() << socket->readAll();
-    socket->close();
+    //socket->close();
 
     qDebug() << "close";
 
@@ -89,13 +97,14 @@ void TcpClient::brightness(int val)
     qDebug() << "Reading: " << socket->bytesAvailable();
 
     qDebug() << socket->readAll();
-    socket->close();
+    //socket->close();
 
     socket->close();
 }
 
-void TcpClient::logintoserver(QString s,QString z)
+bool TcpClient::logintoserver(QString s,QString z)
 {
+     socket = new QTcpSocket(this);
     QByteArray ba,baa;
      char *logBuff1,*logBuff2,sbuff[100];
     qDebug() << "Login in progress";
@@ -104,11 +113,11 @@ void TcpClient::logintoserver(QString s,QString z)
      baa = z.toLatin1();
      logBuff1 = ba.data();
      logBuff2 = baa.data();
-     sprintf(sbuff,"GET /Login?text1=%s&text2=%s HTTP",logBuff1,logBuff2);
+     sprintf(sbuff,"GET /Login?text1=%s&text2=%s HTTP\r\n\r\n",logBuff1,logBuff2);
      qDebug() << sbuff;
 
      if(socket->state() != socket->ConnectedState)
-     socket->connectToHost(TDCIP, port);
+        socket->connectToHost(TDCIP, port);
 
      socket->write(sbuff);
      socket->waitForBytesWritten(1000);
@@ -116,18 +125,54 @@ void TcpClient::logintoserver(QString s,QString z)
      socket->waitForReadyRead(3000);
      qDebug() << "Reading: " << socket->bytesAvailable();
 
-     qDebug() << socket->readAll();
-     //socket->close();
+     ba = socket->readAll();
+
+     qDebug() << ba;
+
+     socket->close();
+
+     if(TcpClient::findString(ba.data(),"OK"))
+     {
+        return true;
+     }
+     else
+         return false;
+
+
 
 }
 
 bool TcpClient::getConnectStatus()
 {
-     if(socket->state() != socket->ConnectedState)
-     {
-         return false;
-     }
-     else {
-         return true;
-     }
+    //check wifi connectivity
+    return true;
+}
+
+
+//GET /L1?
+void TcpClient::logoutuser()
+{
+    if(socket->state() != socket->ConnectedState)
+       socket->connectToHost(TDCIP, port);
+
+    socket->write("GET /L1? HTTP\r\n\r\n");
+    socket->waitForBytesWritten(1000);
+
+    socket->waitForReadyRead(3000);
+    qDebug() << "Reading: " << socket->bytesAvailable();
+
+    qDebug() << socket->readAll();
+    socket->close();
+
+}
+
+
+bool TcpClient::findString(std::string source, std::string sub)
+{
+    std::size_t found = source.find(sub);
+      if (found!=std::string::npos)
+      {
+          return true;
+      }
+      return false;
 }

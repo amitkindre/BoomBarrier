@@ -31,8 +31,7 @@ Rectangle{
             anchors.topMargin: 5
 
             onClicked: {
-                loginPage.visible = true
-                controlPage.visible = false
+                messageDialog.visible = true
             }
 
 
@@ -69,5 +68,30 @@ Rectangle{
             }
         }
     }
+    states: [
+        State {
+            name: "noback"
+
+            PropertyChanges {
+                target: backButton
+                visible: false
+            }
+        },
+        State {
+            name: "nomenu"
+            PropertyChanges {
+                target: backButton
+                visible: true
+            }
+
+            PropertyChanges {
+                target: menuButton
+                visible: false
+            }
+        },
+        State {
+            name: "allbutton"
+        }
+    ]
 
 }

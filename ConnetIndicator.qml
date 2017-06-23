@@ -34,6 +34,15 @@ Item {
                 border.color: "#cdc4c4"
                 border.width: 1
             }
+        },
+        State {
+            name: "outofreach"
+            PropertyChanges {
+                target: rectangle
+                color: "#c0c8c818"
+                border.color: "#cdc4c4"
+                border.width: 1
+            }
         }
     ]
 
@@ -41,7 +50,7 @@ Item {
         Transition {
             from: "*"
             to: "*"
-            PropertyAnimation { target: rectangle ; property: "color"; duration: 500 }
+            PropertyAnimation { target: rectangle ; property: "color"; duration: 200 }
         }
     ]
 }

@@ -43,13 +43,24 @@ Item {
                 anchors.fill: parent
                 onClicked: {
                     focus = true
-                    loginPage.visible = false
-                    controlPage.visible = true
-                    tclient.connect();
 
-                    //textField.getText();
-                    tclient.logintoserver(textField1.text,textField2.text);
-                    connectTimer.running = true;
+                    if(tclient.connect()){
+                        if(tclient.logintoserver(textField1.text,textField2.text)){
+                            connetIndicator.state = "connected"
+                            loginPage.visible = false
+                            controlPage.visible = true
+                            mainMenu.state = "allbutton"
+                        }
+                        else{
+                            //Login failed
+                            connetIndicator.state = "disconnected"
+                        }
+
+                        //connection to server failed
+                        connectTimer.running = true;
+
+                    }
+
                 }
             }
 

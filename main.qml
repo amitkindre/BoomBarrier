@@ -6,6 +6,7 @@ import QtQuick.Controls 1.4
 //import "loginScript.js"  as LoginEngine
 import QtQuick.Layouts 1.3
 import QtQuick.Window 2.2
+import QtQuick.Dialogs 1.2
 
 
 ApplicationWindow {
@@ -15,23 +16,23 @@ ApplicationWindow {
     height: 480
     title: qsTr("Components")
 
-    Item {
-          Timer {
-              id: connectTimer
-              interval: 3000; running: false; repeat: true
-              onTriggered: {
+//    Item {
+//          Timer {
+//              id: connectTimer
+//              interval: 500; running: false; repeat: true
+//              onTriggered: {
 
-                   if(tclient.getConnectStatus()){
-                       connetIndicator.state = "connected";
-                       console.log("Connected");
-                   }
-                   else{
-                       connetIndicator.state = "disconnected";
-                       console.log("disConnected");
-                   }
-              }
-          }
-      }
+//                   if(tclient.getConnectStatus()){
+//                       //connetIndicator.state = "connected";
+//                       //console.log("Connected");
+//                   }
+//                   else{
+//                       connetIndicator.state = "outofreach";
+//                       console.log("Out Of Reach");
+//                   }
+//              }
+//          }
+//      }
 
 
     function loginCheck() {loginEngine.loginCheck()}
@@ -43,6 +44,7 @@ ApplicationWindow {
         anchors.leftMargin: 0
         anchors.top: parent.top
         anchors.topMargin: 0
+        state: "noback"
 
 
     }
@@ -64,21 +66,10 @@ ApplicationWindow {
         id: controlPage
         x: 195
         y: 115
-        //x: 112
-        // y: 97
         anchors.horizontalCenter: parent.horizontalCenter
 
         visible: false
     }
-
-    /*
-
-    SideBar{
-        id: sideBar
-        anchors.fill: parent
-        visible: false
-    }
-*/
 
 
     LoginPage {
@@ -106,6 +97,25 @@ ApplicationWindow {
         anchors.top: mainMenu.bottom
     }
 
+    MessageDialog {
+         id: messageDialog
+         title: "Logout"
+         text: "Confirm Logout?"
+
+         onAccepted: {
+             console.log("Logout")
+             tclient.logoutuser();
+             if(loginPage.visible == false)
+             {
+                loginPage.visible = true
+                controlPage.visible = false
+                mainMenu.state = "noback"
+             }
+             else
+                Qt.quit();
+         }
+         Component.onCompleted: visible = false
+     }
 
 
 }

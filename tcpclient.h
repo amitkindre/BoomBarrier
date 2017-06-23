@@ -13,12 +13,13 @@ class TcpClient : public QObject
 public:
     explicit TcpClient(QObject *parent = 0);
 
-    Q_INVOKABLE void connect();
+    Q_INVOKABLE bool connect();
     Q_INVOKABLE void closegate();
     Q_INVOKABLE void opengate();
     Q_INVOKABLE void brightness(int);
-    Q_INVOKABLE void logintoserver(QString,QString);
+    Q_INVOKABLE bool logintoserver(QString,QString);
     Q_INVOKABLE bool getConnectStatus();
+    Q_INVOKABLE void logoutuser();
 
 signals:
 
@@ -27,7 +28,7 @@ public slots:
 
 private:
     QTcpSocket *socket;
-
+    bool findString(std::string, std::string);
 };
 
 #endif // TCPCLIENT_H
