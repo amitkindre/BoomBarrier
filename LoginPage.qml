@@ -4,6 +4,7 @@ import QtQuick.Controls 2.1
 
 Item {
     id: loginpage
+    property var logstatus: 0
     ColumnLayout {
         id: columnLayout
         width: 640
@@ -22,6 +23,7 @@ Item {
             id: textField2
             Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
             placeholderText:  qsTr("Password")
+            echoMode: "Password";
         }
 
         TextField {
@@ -55,10 +57,11 @@ Item {
                             //Login failed
                             connetIndicator.state = "disconnected"
                         }
+                    }
 
+                    else{
                         //connection to server failed
-                        connectTimer.running = true;
-
+                        connetIndicator.state = "outofreach"
                     }
 
                 }

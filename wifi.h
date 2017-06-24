@@ -2,21 +2,25 @@
 #define WIFI_H
 
 #include <QObject>
+#include <QNetworkConfiguration>
+#include <QNetworkConfigurationManager>
+#include <QDebug>
 
 class Wifi : public QObject
 {
     Q_OBJECT
 public:
     explicit Wifi(QObject *parent = 0);
+    void serchSSID();
 
 signals:
 
 
 public slots:
-    void serchSSID();
+    void updateCompleted();
 
 private:
-
+    QNetworkConfigurationManager *mgr;
 
 };
 

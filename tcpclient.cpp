@@ -104,39 +104,44 @@ void TcpClient::brightness(int val)
 
 bool TcpClient::logintoserver(QString s,QString z)
 {
-     socket = new QTcpSocket(this);
+    socket = new QTcpSocket(this);
     QByteArray ba,baa;
-     char *logBuff1,*logBuff2,sbuff[100];
+    char *logBuff1,*logBuff2,sbuff[100];
     qDebug() << "Login in progress";
 
-     ba = s.toLatin1();
-     baa = z.toLatin1();
-     logBuff1 = ba.data();
-     logBuff2 = baa.data();
-     sprintf(sbuff,"GET /Login?text1=%s&text2=%s HTTP\r\n\r\n",logBuff1,logBuff2);
-     qDebug() << sbuff;
+    ba = s.toLatin1();
+    baa = z.toLatin1();
+    logBuff1 = ba.data();
+    logBuff2 = baa.data();
+    sprintf(sbuff,"GET /Login?text1=%s&text2=%s HTTP\r\n\r\n",logBuff1,logBuff2);
+    qDebug() << sbuff;
 
-     if(socket->state() != socket->ConnectedState)
+    if(socket->state() != socket->ConnectedState)
         socket->connectToHost(TDCIP, port);
 
-     socket->write(sbuff);
-     socket->waitForBytesWritten(1000);
+    socket->write(sbuff);
+    socket->waitForBytesWritten(1000);
 
-     socket->waitForReadyRead(3000);
-     qDebug() << "Reading: " << socket->bytesAvailable();
+    socket->waitForReadyRead(3000);
+    qDebug() << "Reading: " << socket->bytesAvailable();
 
-     ba = socket->readAll();
+    ba = socket->readAll();
 
-     qDebug() << ba;
+    qDebug() << ba;
 
-     socket->close();
+    socket->close();
 
-     if(TcpClient::findString(ba.data(),"OK"))
-     {
-        return true;
-     }
-     else
-         return false;
+    if(TcpClient::findString(ba.data(),"html OK")){
+        return true; //Login sucess
+    }
+
+
+    //else if(TcpClient::findString(ba.data(),"html FAIL")){
+    return false;//Invalid user/ Login fail
+     //}
+
+     //return 3; //Server error or not reachable
+
 
 
 

@@ -7,13 +7,10 @@
 #include "wifi.h"
 
 
-#include <QNetworkConfiguration>
-#include <QNetworkConfigurationManager>
-
-#include <QNetworkInterface>
 
 
 #include "tcpclient.h"
+
 
 
 int main(int argc, char *argv[])
@@ -24,7 +21,8 @@ int main(int argc, char *argv[])
     QQmlApplicationEngine engine;
     QQmlContext* contextp = engine.rootContext();
 
-
+    Wifi wifi;
+    wifi.serchSSID();
 
 
 //    Wifi z;
