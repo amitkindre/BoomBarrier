@@ -113,7 +113,7 @@ bool TcpClient::logintoserver(QString s,QString z)
     baa = z.toLatin1();
     logBuff1 = ba.data();
     logBuff2 = baa.data();
-    sprintf(sbuff,"GET /Login?text1=%s&text2=%s HTTP\r\n\r\n",logBuff1,logBuff2);
+    sprintf(sbuff,"GET /Login?tex_t2368=%s&tex_t8632=%s HTTP\r\n\r\n",logBuff1,logBuff2);
     qDebug() << sbuff;
 
     if(socket->state() != socket->ConnectedState)
@@ -128,9 +128,7 @@ bool TcpClient::logintoserver(QString s,QString z)
     ba = socket->readAll();
 
     qDebug() << ba;
-
     socket->close();
-
     if(TcpClient::findString(ba.data(),"html OK")){
         return true; //Login sucess
     }
@@ -155,8 +153,10 @@ bool TcpClient::getConnectStatus()
 
 
 //GET /L1?
-void TcpClient::logoutuser()
+bool TcpClient::logoutuser()
 {
+    QByteArray ba;
+
     if(socket->state() != socket->ConnectedState)
        socket->connectToHost(TDCIP, port);
 
@@ -166,8 +166,13 @@ void TcpClient::logoutuser()
     socket->waitForReadyRead(3000);
     qDebug() << "Reading: " << socket->bytesAvailable();
 
-    qDebug() << socket->readAll();
+    ba = socket->readAll();
     socket->close();
+
+    if(TcpClient::findString(ba.data(),"html OK")){
+        return true; //Logout sucess
+    }
+    return false; //Logout fail
 
 }
 

@@ -104,15 +104,15 @@ ApplicationWindow {
 
          onAccepted: {
              console.log("Logout")
-             tclient.logoutuser();
-             if(loginPage.visible == false)
+             if(tclient.logoutuser())
              {
+                 //Logut Sucess
                 loginPage.visible = true
                 controlPage.visible = false
                 mainMenu.state = "noback"
+
+                 connetIndicator.state = "disconnected"
              }
-             else
-                Qt.quit();
          }
          Component.onCompleted: visible = false
      }

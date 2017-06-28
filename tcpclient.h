@@ -19,7 +19,7 @@ public:
     Q_INVOKABLE void brightness(int);
     Q_INVOKABLE bool logintoserver(QString,QString);
     Q_INVOKABLE bool getConnectStatus();
-    Q_INVOKABLE void logoutuser();
+    Q_INVOKABLE bool logoutuser();
 
 signals:
 
