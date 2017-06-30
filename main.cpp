@@ -4,6 +4,8 @@
 #include <QDebug>
 #include <QQmlContext>
 #include <QObject>
+//#include <QtAndroidExtras>
+//#include <QAndroidJniObject>
 #include "wifi.h"
 
 
@@ -24,6 +26,11 @@ int main(int argc, char *argv[])
     Wifi wifi;
     wifi.serchSSID();
 
+//    QAndroidJniObject stringNumber = QAndroidJniObject::callStaticObjectMethod("org/qtproject/qt5/TestClass",
+//                                                                               "fromNumber"
+//                                                                               "(I)Ljava/lang/String;",
+//                                                                               "10");
+//    qDebug() << "Get size called" ;
 
 //    Wifi z;
 

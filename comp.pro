@@ -1,6 +1,7 @@
 QT += qml quick
 QT += gui
 QT += network
+#QT += androidextras
 
 CONFIG += c++11
 
@@ -35,3 +36,6 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 HEADERS += \
     wifi.h \
     tcpclient.h
+
+DISTFILES += \
+    JWifi.java

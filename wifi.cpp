@@ -1,4 +1,4 @@
-#include "wifi.h"
+ #include "wifi.h"
 #include <QDebug>
 #include <QNetworkSession>
 
@@ -42,6 +42,8 @@ void Wifi::updateCompleted()
 
     auto session = new QNetworkSession(cfg,this);
     session->open();
+
+
 
 
 

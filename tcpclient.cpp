@@ -30,7 +30,7 @@ bool TcpClient::connect()
         qDebug() << "Connected!";
 
         // send
-        socket->write("\r\n");
+        socket->write("CONNECTED\r\n");
         socket->waitForBytesWritten(100);
         socket->waitForReadyRead(3000);
         qDebug() << "Reading: " << socket->bytesAvailable();
@@ -39,7 +39,7 @@ bool TcpClient::connect()
 
         return true;
 
-        //socket->close();
+        socket->close();
     }
     else
     {
@@ -89,7 +89,7 @@ void TcpClient::brightness(int val)
     char strbuff[110];
     if(socket->state() != socket->ConnectedState)
     socket->connectToHost(TDCIP, port);
-    sprintf(strbuff,"%d\r\n\r\n",val);
+    sprintf(strbuff,"%d\r\n",val);
     socket->write(strbuff);
     socket->waitForBytesWritten(1000);
 
@@ -113,7 +113,7 @@ bool TcpClient::logintoserver(QString s,QString z)
     baa = z.toLatin1();
     logBuff1 = ba.data();
     logBuff2 = baa.data();
-    sprintf(sbuff,"GET /Login?tex_t2368=%s&tex_t8632=%s HTTP\r\n\r\n",logBuff1,logBuff2);
+    sprintf(sbuff,"GET /Login?tex_t2368=%s&tex_t8632=%s HTTP\r\n",logBuff1,logBuff2);
     qDebug() << sbuff;
 
     if(socket->state() != socket->ConnectedState)
