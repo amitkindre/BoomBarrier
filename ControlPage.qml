@@ -31,6 +31,8 @@ Item{
                 height: 50
                 color: "#a40d0d"
                 radius: 25
+                border.color: "#c0dd1e1e"
+                border.width: 2
                 anchors.left: parent.left
                 anchors.leftMargin: 25
                 anchors.verticalCenter: parent.verticalCenter
@@ -42,6 +44,8 @@ Item{
                 height: 50
                 color: "#1fb71f"
                 radius: 25
+                border.color: "#c01de21d"
+                border.width: 2
                 anchors.right: parent.right
                 anchors.rightMargin: 25
                 anchors.verticalCenter: parent.verticalCenter
@@ -63,8 +67,9 @@ Item{
                 id: rectangle
                 width: 100
                 height: 100
-                color: "#c91717"
+                color: mouseArea.pressed ? "#c0c91717" : "#c91717"
                 radius: 10
+                border.width: 2
                 anchors.left: parent.left
                 anchors.leftMargin: 10
                 anchors.verticalCenter: parent.verticalCenter
@@ -95,8 +100,9 @@ Item{
                 id: rectangle1
                 width: 100
                 height: 100
-                color: "#25ca10"
+                color: mouseArea1.pressed ? "#c025ca10" : "#25ca10"
                 radius: 10
+                border.width: 2
                 anchors.right: parent.right
                 anchors.rightMargin: 10
                 MouseArea {
@@ -134,15 +140,38 @@ Item{
             name: "Open"
 
             PropertyChanges { target: rectangle2; color: "#50a40d0d" }
-            PropertyChanges { target: mouseArea1; visible: false}
+            PropertyChanges { target: mouseArea1; visible: true}
             PropertyChanges { target: mouseArea; visible: true}
+
+            PropertyChanges {
+                target: rectangle
+                border.width: 3
+                border.color: "#000000"
+            }
+
+            PropertyChanges {
+                target: rectangle1
+                border.width: 5
+                border.color: "#a0000000"
+            }
         },
         State {
             name: "Close"
 
             PropertyChanges { target: rectangle3;  color: "#501fb71f"}
             PropertyChanges { target: mouseArea1; visible: true}
-            PropertyChanges { target: mouseArea; visible: false}
+            PropertyChanges { target: mouseArea; visible: true}
+
+            PropertyChanges {
+                target: rectangle
+                border.width: 5
+                border.color: "#a0000000"
+            }
+
+            PropertyChanges {
+                target: rectangle1
+                border.width: 3
+            }
         }
     ]
     transitions:[
