@@ -17,7 +17,7 @@ public:
     Q_INVOKABLE void closegate();
     Q_INVOKABLE void opengate();
     Q_INVOKABLE void brightness(int);
-    Q_INVOKABLE bool logintoserver(QString,QString);
+    Q_INVOKABLE int logintoserver(QString,QString);
     Q_INVOKABLE bool getConnectStatus();
     Q_INVOKABLE bool logoutuser();
 
@@ -29,6 +29,7 @@ public slots:
 private:
     QTcpSocket *socket;
     bool findString(std::string, std::string);
+    bool connectAndSetchannel();
 };
 
 #endif // TCPCLIENT_H

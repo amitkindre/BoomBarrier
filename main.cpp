@@ -3,7 +3,7 @@
 #include <QQuickView>
 #include <QDebug>
 #include <QQmlContext>
-#include <QObject>
+
 //#include <QtAndroidExtras>
 //#include <QAndroidJniObject>
 #include "wifi.h"
@@ -23,8 +23,8 @@ int main(int argc, char *argv[])
     QQmlApplicationEngine engine;
     QQmlContext* contextp = engine.rootContext();
 
-    Wifi wifi;
-    wifi.serchSSID();
+   // Wifi wifi;
+    //wifi.serchSSID();
 
 //    QAndroidJniObject stringNumber = QAndroidJniObject::callStaticObjectMethod("org/qtproject/qt5/TestClass",
 //                                                                               "fromNumber"
@@ -62,11 +62,9 @@ int main(int argc, char *argv[])
 //        qDebug() << lst;
 
     TcpClient tClient;
-    //tClient.connect();
+    contextp->setContextProperty("tclient",&tClient); //Expose C++ function to qml
 
 
-
-    contextp->setContextProperty("tclient",&tClient);
 
     engine.load(QUrl(QLatin1String("qrc:/main.qml")));
 

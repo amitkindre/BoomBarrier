@@ -20,44 +20,34 @@ bool TcpClient::connect()
 
     socket = new QTcpSocket(this);
 
-    if(socket->state() != socket->ConnectedState){
-        socket->connectToHost(TDCIP, port);
-        socket->setCurrentWriteChannel(0);
-        socket->setCurrentReadChannel(0);
+    for(int i = 0; i < 5; i++){
+        if(socket->state() == QTcpSocket::UnconnectedState){
+            qDebug()<< "connecting attempt" << i;
+
+            //socket->setSocketOption(QTcpSocket::KeepAliveOption,1);
+            socket->setCurrentWriteChannel(0);
+            socket->setCurrentReadChannel(0);
+            socket->connectToHost(TDCIP, port);
+            if(socket->waitForConnected(3000)){
+                qDebug() << "Connected" << i;
+                socket->write("\r\n");
+                socket->waitForBytesWritten(1000);
+                return true;
+            }
+        }
+//        else{
+
+//        }
     }
 
-    //100.101.111.238
-
-    if(socket->waitForConnected(3000))
-    {
-        qDebug() << "Connected!";
-
-        // send
-        //socket->write("CONNECTED\r\n");
-        //socket->waitForBytesWritten(100);
-        //socket->waitForReadyRead(3000);
-        //qDebug() << "Reading: " << socket->bytesAvailable();
-
-        //qDebug() << socket->readAll();
-
-        return true;
-
-        //socket->close();      //Do not close socket as other metodes callig this methode to connect
-    }
-    else
-    {
-        qDebug() << "Not connected!";
-        return false;
-    }
-
+    qDebug() << "Connection Failed!";
+    return false;
 
 }
 
 void TcpClient::opengate()
 {
-    if(socket->state() != socket->ConnectedState)
-    //socket->connectToHost(TDCIP, port);
-        connect();
+    connectAndSetchannel();
 
     socket->write("GET /O1? HTTP/1.1\r\n");
     socket->waitForBytesWritten(1000);
@@ -73,9 +63,7 @@ void TcpClient::opengate()
 
 void TcpClient::closegate()
 {
-    if(socket->state() != socket->ConnectedState)
-        //socket->connectToHost(TDCIP, port);
-        connect();
+    connectAndSetchannel();
 
     socket->write("GET /C1? HTTP/1.1\r\n");
 
@@ -94,8 +82,9 @@ void TcpClient::closegate()
 void TcpClient::brightness(int val)
 {
     char strbuff[110];
-    if(socket->state() != socket->ConnectedState)
-    socket->connectToHost(TDCIP, port);
+
+    connectAndSetchannel();
+
     sprintf(strbuff,"%d\r\n",val);
     socket->write(strbuff);
     socket->waitForBytesWritten(1000);
@@ -109,7 +98,7 @@ void TcpClient::brightness(int val)
 
 }
 
-bool TcpClient::logintoserver(QString s,QString z)
+int TcpClient::logintoserver(QString s,QString z)
 {
     QByteArray ba,baa;
     char *logBuff1,*logBuff2,sbuff[100];
@@ -122,9 +111,7 @@ bool TcpClient::logintoserver(QString s,QString z)
     sprintf(sbuff,"GET /Login?tex_t2368=%s&tex_t8632=%s HTTP\r\n",logBuff1,logBuff2);
     qDebug() << sbuff;
 
-    if(socket->state() != socket->ConnectedState)
-        //socket->connectToHost(TDCIP, port);
-        connect();
+    connectAndSetchannel();
 
     socket->write(sbuff);
     socket->waitForBytesWritten(1000);
@@ -136,22 +123,19 @@ bool TcpClient::logintoserver(QString s,QString z)
 
 
     qDebug() << ba;
-    socket->close();
+    //socket->close();
     if(TcpClient::findString(ba.data(),"html OK")){
-        return true; //Login sucess
         qDebug() << "Login Sucess";
+        return 1; //Login sucess
     }
 
-    qDebug() << "Login Fail";
-
-    //else if(TcpClient::findString(ba.data(),"html FAIL")){
-    return false;//Invalid user/ Login fail
-     //}
-
-     //return 3; //Server error or not reachable
-
-
-
+    else if(TcpClient::findString(ba.data(),"html FAIL")){
+        qDebug() << "Login Fail";
+        socket->close();
+        socket->waitForDisconnected(10000);
+        return 2;//Invalid user/ Login fail
+    }
+    return 3;//Server channel unavailable "html ERROR"
 
 }
 
@@ -167,9 +151,7 @@ bool TcpClient::logoutuser()
 {
     QByteArray ba;
 
-    if(socket->state() != socket->ConnectedState)
-       //socket->connectToHost(TDCIP, port);
-        connect();
+    connectAndSetchannel();
 
     socket->write("GET /L1? HTTP\r\n");
     socket->waitForBytesWritten(1000);
@@ -180,6 +162,7 @@ bool TcpClient::logoutuser()
     ba = socket->readAll();
     qDebug() << ba;
     socket->close();
+    socket->waitForDisconnected(10000);
 
     if(TcpClient::findString(ba.data(),"html OK")){
         return true; //Logout sucess
@@ -197,4 +180,34 @@ bool TcpClient::findString(std::string source, std::string sub)
           return true;
       }
       return false;
+}
+
+bool TcpClient::connectAndSetchannel()
+{
+    for(int i = 0; i < 3; i++){
+        if(socket->state() == QTcpSocket::UnconnectedState)
+        {
+            qDebug()<< "connecting attempt" << i;
+
+            //socket->setSocketOption(QTcpSocket::KeepAliveOption,1);
+            socket->setCurrentWriteChannel(0);
+            socket->setCurrentReadChannel(0);
+            socket->connectToHost(TDCIP, port);
+            if(socket->waitForConnected(3000))
+            {
+                qDebug() << "Connected" << i;
+                socket->write("\r\n");
+                socket->waitForBytesWritten(1000);
+                return true;
+            }
+        }
+        else
+        {   //Already connected
+            qDebug() << "Already Connected";
+            return true;
+        }
+    }
+
+    qDebug() << "Connection Failed ";
+    return false;
 }

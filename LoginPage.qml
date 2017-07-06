@@ -47,15 +47,19 @@ Item {
                     focus = true
 
                     if(tclient.connect()){
-                        if(tclient.logintoserver(textField1.text,textField2.text)){
-                            connetIndicator.state = "connected"
+                        if((logstatus = tclient.logintoserver(textField1.text,textField2.text)) === 1){
+                            connetIndicator.state = "connected"//login sucess 1
                             loginPage.visible = false
                             controlPage.visible = true
                             mainMenu.state = "allbutton"
                         }
-                        else{
-                            //Login failed
+                        else if(logstatus === 2){
+                            //Login failed 2
                             connetIndicator.state = "disconnected"
+                        }
+                        else
+                        {//channel unavailable 3
+                            connetIndicator.state = "outofreach"
                         }
                     }
 
@@ -79,6 +83,15 @@ Item {
                 horizontalAlignment: Text.AlignHCenter
                 anchors.fill: parent
             }
+        }
+
+        ProgressBar {
+            id: loginProgressBar
+            anchors.right: parent.right
+            anchors.rightMargin: 0
+            anchors.left: parent.left
+            anchors.leftMargin: 0
+            value: 0.5
         }
     }
 }
