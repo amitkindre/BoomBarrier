@@ -82,11 +82,6 @@ void TcpClient::closegate()
 void TcpClient::brightness(int val,QString channel)
 {
     char strbuff[110];
-    char *ptrBuff;
-    QByteArray ba;
-
-    ba = channel.toLatin1();
-    ptrBuff = ba.data();
 
     connectAndSetchannel();
 

@@ -16,7 +16,7 @@ public:
     Q_INVOKABLE bool connect();
     Q_INVOKABLE void closegate();
     Q_INVOKABLE void opengate();
-    Q_INVOKABLE void brightness(int,QString);
+    Q_INVOKABLE void brightness(int);
     Q_INVOKABLE int logintoserver(QString,QString);
     Q_INVOKABLE bool getConnectStatus();
     Q_INVOKABLE bool logoutuser();
