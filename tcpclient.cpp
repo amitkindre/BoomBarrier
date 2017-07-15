@@ -94,7 +94,7 @@ void TcpClient::brightness(int val,QString channel)
     socket->write(strbuff);
     socket->waitForBytesWritten(1000);
 
-    socket->waitForReadyRead(3000);
+    socket->waitForReadyRead(2000);
     qDebug() << "Reading: " << socket->bytesAvailable();
 
     qDebug() << socket->readAll();
