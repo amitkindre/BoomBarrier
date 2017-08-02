@@ -13,5 +13,7 @@
         <file>loginScript.js</file>
         <file>DeviceList.qml</file>
         <file>ConnetIndicator.qml</file>
+        <file>MapPage.qml</file>
+        <file>TabViewPage.qml</file>
     </qresource>
 </RCC>

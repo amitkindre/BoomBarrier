@@ -36,6 +36,7 @@ ApplicationWindow {
 
 
     function loginCheck() {loginEngine.loginCheck()}
+
     MyMenuBar{
         id: mainMenu
         anchors.right: parent.right
@@ -81,7 +82,7 @@ ApplicationWindow {
         anchors.left: parent.left
         anchors.leftMargin: 20
 
-        visible: true
+        visible: false
 
     }
 
@@ -115,6 +116,12 @@ ApplicationWindow {
              }
          }
          Component.onCompleted: visible = false
+    }
+
+    MapPage {
+        id: mapPage
+        anchors.fill: parent
+
      }
 
 
